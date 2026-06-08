@@ -19,7 +19,7 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
     date: {
-      type: String,
+      type: Date,  // ✅ changed from String to Date
       required: true,
     },
     status: {

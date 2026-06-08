@@ -53,19 +53,19 @@ const DoctorAppointments = () => {
       dataIndex: "_id",
     },
     {
-      title: "Date & Time",
-      dataIndex: "date",
-      render: (text, record) => (
-        <span>
-          {/* ✅ date is ISO string → format date part */}
-          {moment(record.date).format("DD-MM-YYYY")} &nbsp;
-          {/* ✅ time is plain "HH:mm" string → parse it directly */}
-          {record.time
-            ? moment(record.time, "HH:mm").format("hh:mm A")
-            : moment(record.date).format("hh:mm A")}
-        </span>
-      ),
-    },
+  title: "Date & Time",
+  dataIndex: "date",
+  render: (text, record) => (
+    <span>
+      {moment(record.date).format("DD-MM-YYYY")} &nbsp;
+      {record.time
+        ? record.time.includes("T")
+          ? moment(record.time).format("hh:mm A")
+          : moment(record.time, "HH:mm").format("hh:mm A")
+        : "N/A"}
+    </span>
+  ),
+},
     {
       title: "Status",
       dataIndex: "status",

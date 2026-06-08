@@ -13,7 +13,6 @@ const BookingPage = () => {
   const [doctors, setDoctors] = useState([]);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [isAvailable, setIsAvailable] = useState();
   const dispatch = useDispatch();
 
   const getUserData = async () => {
@@ -21,7 +20,11 @@ const BookingPage = () => {
       const res = await axios.post(
         "/api/v1/doctor/getDoctorById",
         { doctorId: params.doctorId },
-        { headers: { Authorization: "Bearer " + localStorage.getItem("token") } }
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
       );
       if (res.data.success) {
         setDoctors(res.data.data);
@@ -37,11 +40,14 @@ const BookingPage = () => {
       const res = await axios.post(
         "/api/v1/user/booking-availbility",
         { doctorId: params.doctorId, date, time },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       dispatch(hideLoading());
       if (res.data.success) {
-        setIsAvailable(true);
         message.success(res.data.message);
       } else {
         message.error(res.data.message);
@@ -63,7 +69,11 @@ const BookingPage = () => {
       const orderRes = await axios.post(
         "/api/payment/order",
         { amount: doctors.feesPerCunsaltation },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       dispatch(hideLoading());
 
@@ -106,7 +116,11 @@ const BookingPage = () => {
       const verifyRes = await axios.post(
         "/api/payment/verify",
         paymentResponse,
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
 
       if (!verifyRes.data.success) {
@@ -114,11 +128,14 @@ const BookingPage = () => {
         return message.error("Payment verification failed");
       }
 
-      // ✅ Combine date + time into a proper datetime before saving
-      const combinedDateTime = moment(
-        `${date} ${time}`,
-        "DD-MM-YYYY HH:mm"
-      ).toISOString();
+      
+      const combinedDateTime = moment(date, "DD-MM-YYYY")
+        .set({
+          hour: moment(time, "HH:mm").hours(),
+          minute: moment(time, "HH:mm").minutes(),
+          second: 0,
+        })
+        .toISOString();
 
       const res = await axios.post(
         "/api/v1/user/book-appointment",
@@ -127,10 +144,14 @@ const BookingPage = () => {
           userId: user._id,
           doctorInfo: doctors,
           userInfo: user,
-          date: combinedDateTime, // ✅ full ISO datetime now
-          time: time,
+          date: combinedDateTime, 
+          time: time,          
         },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       dispatch(hideLoading());
 
@@ -165,19 +186,17 @@ const BookingPage = () => {
               {doctors.timings && doctors.timings[1]}
             </h4>
             <div className="d-flex flex-column w-50">
+              {/* ✅ dateString is already "DD-MM-YYYY" from format prop */}
               <DatePicker
                 className="m-2"
                 format="DD-MM-YYYY"
-                onChange={(value) =>
-                  setDate(moment(value).format("DD-MM-YYYY"))
-                }
+                onChange={(value, dateString) => setDate(dateString)}
               />
+          
               <TimePicker
                 format="HH:mm"
                 className="m-2"
-                onChange={(value) => {
-                  setTime(moment(value).format("HH:mm"));
-                }}
+                onChange={(value, timeString) => setTime(timeString)}
               />
               <button
                 className="btn btn-primary mt-2"

@@ -181,8 +181,8 @@ const getAllDocotrsController = async (req, res) => {
 //BOOK APPOINTMENT
 const bookeAppointmnetController = async (req, res) => {
   try {
-req.body.date=moment(req.body.date,'DD-MM-YYYY').toISOString();
-req.body.time=moment(req.body.time,'HH:mm').toISOString();
+   req.body.date = new Date(req.body.date); 
+   req.body.time = req.body.time; 
     req.body.status = "pending";
     const newAppointment = new appointmentModel(req.body);
     await newAppointment.save();
