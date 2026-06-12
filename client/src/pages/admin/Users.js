@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./../../components/Layout";
-import axios from "../axiosConfig";
+import axios from "../../axiosConfig";
 import { Table } from "antd";
 const Users = () => {
   const [users, setUsers] = useState([]);
