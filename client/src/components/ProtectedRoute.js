@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosConfig";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../redux/features/userSlice";
 
