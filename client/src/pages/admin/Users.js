@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./../../components/Layout";
-import axios from "../../axiosConfig";
+import axios from "axios";
+axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
 import { Table } from "antd";
 const Users = () => {
   const [users, setUsers] = useState([]);

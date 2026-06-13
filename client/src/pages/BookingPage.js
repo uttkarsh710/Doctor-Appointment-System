@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
-import axios from "../axiosConfig";
+import axios from "axios";
+axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
 import { DatePicker, message, TimePicker } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";

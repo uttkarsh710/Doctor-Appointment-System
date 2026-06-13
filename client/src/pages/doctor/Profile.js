@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./../../components/Layout";
-import axios from "../../axiosConfig";
+import axios from "axios";
+axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
 import { useParams, useNavigate } from "react-router-dom";
 import { Col, Form, Input, Row, TimePicker, message } from "antd";
 import { useSelector, useDispatch } from "react-redux";

@@ -3,7 +3,8 @@ import Layout from "./../components/Layout";
 import { Col, Form, Input, Row, TimePicker, message } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "../axiosConfig";
+import axios from "axios";
+axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
 import { showLoading, hideLoading } from "../redux/features/alertSlice";
 
 const ApplyDoctor = () => {

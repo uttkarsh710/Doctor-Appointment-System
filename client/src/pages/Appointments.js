@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "../axiosConfig";
+import axios from "axios";
+axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
 import Layout from "./../components/Layout";
 import moment from "moment";
 import { Table } from "antd";
