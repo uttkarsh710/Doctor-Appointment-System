@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./../../components/Layout";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../../axiosConfig";
 import moment from "moment";
 import { message, Table } from "antd";
 
@@ -10,7 +9,7 @@ const DoctorAppointments = () => {
 
   const getAppointments = async () => {
     try {
-      const res = await axios.get("/api/v1/doctor//doctor-appointments", {
+      const res = await axiosInstance.get("/api/v1/doctor//doctor-appointments", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -29,7 +28,7 @@ const DoctorAppointments = () => {
 
   const handleStatus = async (record, status) => {
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/doctor/update-status",
         { appointmentsId: record._id, status },
         {

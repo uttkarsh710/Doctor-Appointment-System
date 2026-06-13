@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./../../components/Layout";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../../axiosConfig";
 import { useParams, useNavigate } from "react-router-dom";
 import { Col, Form, Input, Row, TimePicker, message } from "antd";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,7 +19,7 @@ const Profile = () => {
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/doctor/updateProfile",
         {
           ...values,
@@ -51,7 +50,7 @@ const Profile = () => {
   //getDOc Details
   const getDoctorInfo = async () => {
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/doctor/getDoctorInfo",
         { userId: params.id },
         {

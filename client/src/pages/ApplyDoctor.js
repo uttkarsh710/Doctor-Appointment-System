@@ -3,8 +3,7 @@ import Layout from "./../components/Layout";
 import { Col, Form, Input, Row, TimePicker, message } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../axiosConfig";
 import { showLoading, hideLoading } from "../redux/features/alertSlice";
 
 const ApplyDoctor = () => {
@@ -27,7 +26,7 @@ const ApplyDoctor = () => {
     try {
       console.log("ApplyDoctor: fetchUserData start");
       setLocalLoading(true);
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/user/getUserData",
         {},
         {
@@ -78,7 +77,7 @@ const ApplyDoctor = () => {
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/user/apply-doctor",
         {
           ...values,

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../axiosConfig";
 import { DatePicker, message, TimePicker } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +17,7 @@ const BookingPage = () => {
 
   const getUserData = async () => {
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/doctor/getDoctorById",
         { doctorId: params.doctorId },
         {
@@ -38,7 +37,7 @@ const BookingPage = () => {
   const handleAvailability = async () => {
     try {
       dispatch(showLoading());
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/user/booking-availbility",
         { doctorId: params.doctorId, date, time },
         {
@@ -67,7 +66,7 @@ const BookingPage = () => {
       }
       dispatch(showLoading());
 
-      const orderRes = await axios.post(
+      const orderRes = await axiosInstance.post(
         "/api/payment/order",
         { amount: doctors.feesPerCunsaltation },
         {
@@ -114,7 +113,7 @@ const BookingPage = () => {
     try {
       dispatch(showLoading());
 
-      const verifyRes = await axios.post(
+      const verifyRes = await axiosInstance.post(
         "/api/payment/verify",
         paymentResponse,
         {
@@ -138,7 +137,7 @@ const BookingPage = () => {
         })
         .toISOString();
 
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/user/book-appointment",
         {
           doctorId: params.doctorId,

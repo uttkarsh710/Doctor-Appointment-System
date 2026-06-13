@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../axiosConfig";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../redux/features/userSlice";
 
@@ -14,7 +13,7 @@ useEffect(() => {
     try {
       console.log("ProtectedRoute: fetching user");
       // avoid toggling global loading here — it unmounts Routes and causes remount loops
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/user/getUserData",
         {},
         {

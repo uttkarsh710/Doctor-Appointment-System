@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../../axiosConfig";
 import { message, Table } from "antd";
 
 const Doctors = () => {
@@ -10,7 +9,7 @@ const Doctors = () => {
   // Get All Doctors
   const getDoctors = async () => {
     try {
-      const res = await axios.get("/api/v1/admin/getAllDoctors", {
+      const res = await axiosInstance.get("/api/v1/admin/getAllDoctors", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -28,7 +27,7 @@ const Doctors = () => {
   // Approve Doctor
   const handleAccountStatus = async (record, status) => {
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "/api/v1/admin/changeAccountStatus",
         {
           doctorId: record._id,
@@ -55,7 +54,7 @@ const Doctors = () => {
   // Delete Doctor
   const handleDeleteDoctor = async (id) => {
     try {
-      const res = await axios.delete(
+      const res = await axiosInstance.delete(
         `/api/v1/admin/deleteDoctor/${id}`,
         {
           headers: {

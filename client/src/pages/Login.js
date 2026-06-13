@@ -13,7 +13,7 @@ const Login = () => {
     const onfinishHandler=async(values)=>{
        try {
         dispatch(showLoading())
-        const res=await axios.post('/api/v1/user/login',values)
+        const res=await axiosInstance.post('/api/v1/user/login',values)
         dispatch(hideLoading())
         if(res.data.success){
             localStorage.setItem("token",res.data.token);

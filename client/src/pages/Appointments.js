@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../axiosConfig";
 import Layout from "./../components/Layout";
 import moment from "moment";
 import { Table } from "antd";
@@ -10,7 +9,7 @@ const Appointments = () => {
 
   const getAppointments = async () => {
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
   "/api/v1/user/user-appointments",
   {},
   {

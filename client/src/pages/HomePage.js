@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-axios.defaults.baseURL = "https://doctor-appointment-system-v4sp.onrender.com";
+import axiosInstance from "../axiosConfig";
 import Layout from "./../components/Layout";
 import { Row } from "antd";
 import DoctorList from "../components/DoctorList";
@@ -9,7 +8,7 @@ const HomePage = () => {
   // login user data
   const getUserData = async () => {
     try {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         "/api/v1/user/getAllDoctors",
 
         {
