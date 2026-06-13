@@ -2,7 +2,7 @@ import React from 'react'
 import { Form,Input,message } from "antd"
 import "../styles/RegisterStyles.css"
 import {Link,useNavigate} from "react-router-dom"
-import axios from "axios"
+import axiosInstance from "../axiosConfig";
 import {useDispatch} from "react-redux"
 import { showLoading ,hideLoading} from '../redux/features/alertSlice'
 
